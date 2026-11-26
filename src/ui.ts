@@ -31,7 +31,13 @@ import {
     tintSvg,
     typeLabel,
 } from './data'
-import { insertMark, type Mark, notify, resizePanel } from './designer'
+import {
+    followTheme,
+    insertMark,
+    type Mark,
+    notify,
+    resizePanel,
+} from './designer'
 import {
     loadSettings,
     saveSettings as storeSettings,
@@ -492,6 +498,10 @@ document.addEventListener('keydown', (event) => {
 
 // Room for three columns of marks; the Designer keeps it within the window
 resizePanel(360, 560)
+// Light or dark like the Designer around it
+followTheme((theme) => {
+    document.documentElement.dataset.theme = theme
+})
 applySettings()
 renderList()
 loadAirlines().then(() => {

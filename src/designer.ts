@@ -34,6 +34,26 @@ export const resizePanel = (width: number, height: number): void => {
     if (inDesigner()) webflow.setExtensionSize({ width, height })
 }
 
+export type Theme = 'light' | 'dark'
+
+// Calls `apply` with the Designer's appearance now and whenever the user
+// changes it: 'light', or 'dark' for its three dark themes. Outside the
+// Designer, or in one without the theme API, the panel stays dark.
+export const followTheme = (apply: (theme: Theme) => void): void => {
+    if (!inDesigner()) return
+    const toTheme = (name: string): Theme =>
+        name === 'light' ? 'light' : 'dark'
+    try {
+        webflow
+            .getTheme()
+            .then((name) => apply(toTheme(name)))
+            .catch(() => {})
+        webflow.subscribe('currenttheme', (name) => apply(toTheme(name)))
+    } catch {
+        // An older Designer without getTheme: keep the dark panel
+    }
+}
+
 // The promises below last as long as the panel: assets and the folder are
 // looked up once, then remembered
 let folder: Promise<AssetFolder> | undefined
