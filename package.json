@@ -1,0 +1,37 @@
+{
+  "name": "soaring-symbols-webflow",
+  "private": true,
+  "description": "Webflow Designer extension to search airlines and insert their Soaring Symbols logos, icons and tails into pages.",
+  "license": "MIT",
+  "author": {
+    "name": "Anh Thang Bui",
+    "url": "https://anhthang.org"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "watch": "node scripts/build.js --watch",
+    "dev": "concurrently -r \"node scripts/build.js --watch\" \"webflow extension serve\"",
+    "bundle": "node scripts/build.js && webflow extension bundle",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "node --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "soaring-symbols": "^0.6.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.11",
+    "@webflow/designer-extension-typings": "^2.2.2",
+    "@webflow/webflow-cli": "^2.18.0",
+    "concurrently": "^10.0.7",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "typescript-eslint": "^8.74.0"
+  }
+}

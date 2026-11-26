@@ -1,0 +1,336 @@
+<!--
+    Only the body: the Webflow CLI and the Designer put this inside a page of
+    their own, which loads the Designer API before index.js
+-->
+<style>
+    /* The Designer's own dark panels */
+    :root {
+        color-scheme: dark;
+        --text: #f5f5f5;
+        --text-secondary: #a3a3a3;
+        --bg: #2b2b2b;
+        --bg-hover: #383838;
+        --bg-secondary: #363636;
+        --bg-warning-tertiary: #4d3d12;
+        --border: #444444;
+        --border-selected: #146ef5;
+        /* Marks are previewed on a light checkerboard, as on most
+                   pages they go into */
+        --preview: #ffffff;
+        --preview-check: #ebebeb;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+    }
+    body {
+        font:
+            11px/16px Inter,
+            system-ui,
+            -apple-system,
+            sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+    }
+    button,
+    input,
+    select {
+        font: inherit;
+        color: inherit;
+    }
+    header {
+        padding: 8px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .search {
+        flex: 1;
+        height: 32px;
+        padding: 0 8px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background: transparent;
+        outline: none;
+    }
+    .search:focus {
+        border-color: var(--border-selected);
+    }
+    .icon-button {
+        width: 32px;
+        height: 32px;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .icon-button:hover {
+        background: var(--bg-hover);
+    }
+    main {
+        flex: 1;
+        overflow-y: auto;
+    }
+    .notice {
+        margin: 8px;
+        padding: 6px 8px;
+        border-radius: 5px;
+        background: var(--bg-warning-tertiary);
+        color: var(--text);
+    }
+    .empty {
+        padding: 24px 16px;
+        text-align: center;
+        color: var(--text-secondary);
+    }
+    .airline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 6px 12px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+    }
+    .airline:hover,
+    .airline:focus-visible {
+        background: var(--bg-hover);
+        outline: none;
+    }
+    /* On a light chip, so dark marks (SkyTeam) show on the dark panel */
+    .thumb {
+        width: 32px;
+        height: 32px;
+        padding: 3px;
+        flex: none;
+        object-fit: contain;
+        border-radius: 6px;
+        background: var(--preview);
+    }
+    .airline-text {
+        flex: 1;
+        min-width: 0;
+    }
+    .airline-name {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .secondary {
+        color: var(--text-secondary);
+    }
+    .badge {
+        margin-left: 4px;
+        padding: 0 4px;
+        border-radius: 3px;
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        font-size: 10px;
+    }
+    .detail-title {
+        flex: 1;
+        min-width: 0;
+    }
+    .detail-title h1 {
+        margin: 0;
+        font-size: 13px;
+        line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .controls {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+    }
+    .controls label {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .controls select {
+        height: 24px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--bg);
+    }
+    .column-title input[type='color'],
+    .swatch {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: none;
+        cursor: pointer;
+    }
+    .swatch {
+        border-radius: 50%;
+    }
+    .section-title {
+        margin: 0;
+        padding: 12px 12px 0;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+    .type-title {
+        margin: 0;
+        padding: 8px 12px 4px;
+        font-size: 11px;
+        font-weight: 500;
+    }
+    .tiles {
+        display: grid;
+        gap: 8px;
+        padding: 0 12px;
+    }
+    /* The column names stay in view while the marks scroll */
+    .column-titles {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+    }
+    .column-title {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        min-width: 0;
+        height: 18px;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+    .column-title span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #content > .tiles:last-child {
+        padding-bottom: 12px;
+    }
+    .tile-missing {
+        border: 1px dashed var(--border);
+        border-radius: 6px;
+    }
+    .tile {
+        display: flex;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: transparent;
+        cursor: pointer;
+    }
+    .tile:hover,
+    .tile:focus-visible {
+        border-color: var(--border-selected);
+        outline: none;
+    }
+    .tile-preview {
+        width: 100%;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        /* A checkerboard, so white and transparent parts show */
+        background-color: var(--preview);
+        background-image:
+            linear-gradient(45deg, var(--preview-check) 25%, transparent 25%),
+            linear-gradient(-45deg, var(--preview-check) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, var(--preview-check) 75%),
+            linear-gradient(-45deg, transparent 75%, var(--preview-check) 75%);
+        background-size: 12px 12px;
+        background-position:
+            0 0,
+            0 6px,
+            6px -6px,
+            -6px 0;
+    }
+    /* Uploading and inserting */
+    .tile[aria-busy='true'] {
+        opacity: 0.5;
+        cursor: progress;
+    }
+    /* A mark for dark backgrounds shows on one, as it will be used */
+    .tile[data-dark='true'] .tile-preview {
+        background: #1e1e1e;
+    }
+    .tile-preview img {
+        width: 56px;
+        height: 56px;
+        pointer-events: none;
+    }
+    footer {
+        padding: 6px 12px;
+        border-top: 1px solid var(--border);
+        color: var(--text-secondary);
+    }
+    footer a {
+        color: inherit;
+    }
+    [hidden] {
+        display: none !important;
+    }
+</style>
+<section id="list-view">
+    <header>
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Search airlines or alliances by name or code"
+            autocomplete="off"
+            spellcheck="false"
+            autofocus
+        />
+    </header>
+</section>
+<section id="detail-view" hidden>
+    <header>
+        <button
+            id="back"
+            class="icon-button"
+            title="Back to the list"
+            aria-label="Back to the list"
+        >
+            ←
+        </button>
+        <div class="detail-title">
+            <h1 id="detail-name"></h1>
+            <div id="detail-meta" class="secondary"></div>
+        </div>
+    </header>
+    <div class="controls">
+        <label>
+            Size
+            <select id="size"></select>
+        </label>
+    </div>
+</section>
+<main id="content"></main>
+<footer>
+    Select an element, then click a mark to insert it.
+    <a href="https://soaringsymbols.org" target="_blank" rel="noreferrer"
+        >soaringsymbols.org</a
+    >
+</footer>
+<script src="index.js" defer></script>
