@@ -4,6 +4,8 @@ A Webflow Designer extension to search airlines by name, IATA or ICAO code and i
 
 > [!NOTE]
 > The extension isn't on the Webflow Marketplace. Add it to your own workspace as a private app, as described under [Add it to your workspace](#add-it-to-your-workspace).
+>
+> Submitting it takes many steps, a demo video for Webflow's review team among them, and that is where it stopped. If you'd like to help record one, [open an issue](https://github.com/soaring-symbols/webflow/issues) with a link to it on Loom or YouTube, as Webflow asks, and I'll give the Marketplace another try. Everything else the form asks for is ready in [`store/`](store/).
 
 - Search 180+ airlines by name, other names they go by (SWISS), IATA or ICAO code, callsign or slug, and alliances (oneworld, SkyTeam, Star Alliance) by name. Cargo airlines are marked "Cargo", and searching "cargo" lists them.
 - Select an element on the page, then click a mark: it goes inside the element as an image, or right after it when the element can't hold one.

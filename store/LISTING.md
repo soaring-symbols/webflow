@@ -13,10 +13,11 @@ Copied from `exports/webflow/` in [soaring-symbols/brand](https://github.com/soa
 - App icon (app settings): `store/icon.png`, 256×256.
 - Logo (Marketplace): `store/logo.png`, 900×900, under 50 KB. Alt text: Soaring Symbols logo: the letters S S on two dark split-flap tiles, like a departure board, on a yellow square.
 - Screenshots (Marketplace, 1280×846, four to five), in this order, with their alt text:
-    1. `store/screenshot-insert.png`: The Soaring Symbols panel beside a page, with the Vietnam Airlines logo just inserted into the selected element.
-    2. `store/screenshot-search.png`: The panel listing the airline alliances and airlines, with a search field for names and codes.
-    3. `store/screenshot-versions.png`: Vietnam Airlines' logo, stacked logo and icon in color, monochrome and dark-background versions.
-    4. `store/screenshot-light.png`: The panel in the Designer's light appearance, with Japan Airlines' marks and its monochrome marks in the airline's red.
+    1. `store/screenshot-demo.png`: The Soaring Symbols panel beside the demo site's dark hero, with Vietnam Airlines' icon for dark backgrounds just inserted into the selected element.
+    2. `store/screenshot-insert.png`: The panel beside an airline partners page, with the Vietnam Airlines logo just inserted into the selected element.
+    3. `store/screenshot-search.png`: The panel listing the airline alliances and airlines, with a search field for names and codes.
+    4. `store/screenshot-versions.png`: Vietnam Airlines' logo, stacked logo and icon in color, monochrome and dark-background versions.
+    5. `store/screenshot-light.png`: The panel in the Designer's light appearance, with Japan Airlines' marks and its monochrome marks in the airline's red.
 
 ## App settings
 
