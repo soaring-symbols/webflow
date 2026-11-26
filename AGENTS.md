@@ -8,7 +8,7 @@ A Webflow Designer Extension (the panel of a Webflow App) that searches the [Soa
 
 - `webflow.json` — the extension manifest: `apiVersion` `"2"`, `size` and `publicDir` (`dist`, which the CLI serves and bundles).
 - `src/index.html` — the panel's markup and styles. Only what goes in `<body>`: the Webflow CLI and the Designer wrap it in a page of their own that loads the Designer API (the `webflow` global) before `index.js`. It is dark by default and light under `data-theme="light"`, which `followTheme` in `src/designer.ts` sets from the Designer's appearance (`getTheme` and the `currenttheme` event). That page declares no charset, so the markup stays ASCII: write `&larr;`, not the character.
-- `src/ui.ts` — the panel: the list and search (alliances with marks first, then airlines), the marks of an airline or alliance (a row per mark type, a column per file: color, mono, dark background), the size control and, in the Mono column's heading, the mono color controls. It fetches everything from jsDelivr.
+- `src/ui.ts` — the panel: the list and search (alliances with marks first, then airlines), the marks of an airline or alliance (a row per mark type, a column per file: color, mono, dark background), the column names as pills, and under them on the same three columns the size and the mono color (a picker, and the primary color in one click), and a footer whose tip changes with the view. It fetches everything from jsDelivr.
 - `src/designer.ts` — everything that calls the Designer API: a clicked mark is uploaded to the site's assets (into a "Soaring Symbols" folder, with alt text) and inserted as an Image element into the selected element, or after it when it can't hold children, sized by a shared class (`soaring-symbols-<size>`, width and height in px). It checks `canForAppMode` first and says what's missing.
 - `src/data.ts` — pure helpers shared by the panel and the tests: data URLs (`DATA_LINE`), search ranking, asset tiles for an airline or an alliance, older marks from `history`, tinting mono SVGs, and `assetFileName`, the name a mark is uploaded under.
 - `src/settings.ts` — the size and mono color, kept in `localStorage` (which may throw or come back empty; the defaults apply then).
@@ -50,6 +50,7 @@ Dependencies are tracked in both `package-lock.json` and `bun.lock`; update both
 - The Designer API only works inside the Designer. Opened on its own (`npm run dev`, then `http://localhost:1337` in a browser), the panel lists airlines and marks, the Webflow script logs that it isn't running in Webflow, and a click only logs a notice (`inDesigner` in `src/designer.ts`).
 - The Designer has no drag and drop from an extension onto the canvas: marks are inserted into the selected element.
 - In the panel, a key handler that moves focus to a button must `preventDefault()`, or the same key press clicks that button.
+- The size and mono color row (`#controls`) moves into the detail view's marks while an airline is shown, and leaves the document when the list replaces them; `ui.ts` keeps references to it and its parts, so never look them up by id after the first airline.
 
 ## Conventions
 
