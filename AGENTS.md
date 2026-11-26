@@ -12,13 +12,16 @@ A Webflow Designer Extension (the panel of a Webflow App) that searches the [Soa
 - `src/designer.ts` — everything that calls the Designer API: a clicked mark is uploaded to the site's assets (into a "Soaring Symbols" folder, with alt text) and inserted as an Image element into the selected element, or after it when it can't hold children, sized by a shared class (`soaring-symbols-<size>`, width and height in px). It checks `canForAppMode` first and says what's missing.
 - `src/data.ts` — pure helpers shared by the panel and the tests: data URLs (`DATA_LINE`), search ranking, asset tiles for an airline or an alliance, older marks from `history`, tinting mono SVGs, and `assetFileName`, the name a mark is uploaded under.
 - `src/settings.ts` — the size and mono color, kept in `localStorage` (which may throw or come back empty; the defaults apply then).
+- `scripts/review.js` — `review.zip` for a Marketplace submission: the same build with an external source map (it checks `index.js` matches `dist/`), plus `package.json` and `package-lock.json`.
 - `scripts/build.js` — esbuild: `src/ui.ts` → `dist/index.js`, and `src/index.html` copied next to it. No source maps: the Marketplace refuses a bundle that ships them.
-- `store/` — what the app's settings in Webflow show: `LISTING.md` (the App info fields to paste) and `icon.png` (256×256), copied from `exports/webflow/` in [soaring-symbols/brand](https://github.com/soaring-symbols/brand), where it is rendered; change it there first.
+- `store/` — what the app's settings in Webflow show: `LISTING.md` (the App info fields and the Marketplace form), `icon.png` (256×256), `logo.png` (900×900) and the screenshots (1280×846), copied from `exports/webflow/` in [soaring-symbols/brand](https://github.com/soaring-symbols/brand), where they are rendered; change them there first.
 - `test/` — unit tests for `src/data.ts` and `src/settings.ts`, run by Node's test runner with type stripping.
 
 ### Where the data comes from
 
 As in the Figma plugin: `airlines.json`, `alliances.json` and the SVGs come from the published `soaring-symbols` npm package through jsDelivr, pinned to one release line (`DATA_LINE`, `"0.<minor>"`, in `src/data.ts`), read from the exact release the line points at (`RESOLVE_URL`, `setDataVersion`), with the lists bundled from the `soaring-symbols` dependency as the fallback.
+
+The extension's own versions follow the package release they were built against (`version` in `package.json`, e.g. `0.6.1`), and name the version uploaded to Webflow and its notes.
 
 When the library releases a new minor line, update the extension in one change: set `DATA_LINE`, move the `soaring-symbols` dependency to the line (`npm install soaring-symbols@^0.<minor>.0`, plus `bun install`), adapt the code, and upload a new extension version.
 
@@ -28,15 +31,16 @@ A mark's asset is named by `assetFileName`: slug, file, the year of an older mar
 
 ## Commands
 
-| Command             | What it does                                                                            |
-| :------------------ | :-------------------------------------------------------------------------------------- |
-| `npm run build`     | Build `dist/` (git-ignored).                                                            |
-| `npm run dev`       | Rebuild on change and serve `dist/` at `http://localhost:1337` for the Designer.        |
-| `npm run bundle`    | Build, then `webflow extension bundle` writes `bundle.zip` (git-ignored) to upload.     |
-| `npm run typecheck` | `tsc --noEmit`, with the Designer API types from `@webflow/designer-extension-typings`. |
-| `npm run lint`      | ESLint, then Prettier in check mode.                                                    |
-| `npm run format`    | Prettier.                                                                               |
-| `npm test`          | `node --test` on `test/**/*.test.ts` (Node 22.18+).                                     |
+| Command             | What it does                                                                                                                 |
+| :------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
+| `npm run build`     | Build `dist/` (git-ignored).                                                                                                 |
+| `npm run dev`       | Rebuild on change and serve `dist/` at `http://localhost:1337` for the Designer.                                             |
+| `npm run bundle`    | Build, then `webflow extension bundle` writes `bundle.zip` (git-ignored) to upload.                                          |
+| `npm run review`    | Write `review.zip` (git-ignored), the source map artifact for a Marketplace submission, from the same build as `bundle.zip`. |
+| `npm run typecheck` | `tsc --noEmit`, with the Designer API types from `@webflow/designer-extension-typings`.                                      |
+| `npm run lint`      | ESLint, then Prettier in check mode.                                                                                         |
+| `npm run format`    | Prettier.                                                                                                                    |
+| `npm test`          | `node --test` on `test/**/*.test.ts` (Node 22.18+).                                                                          |
 
 Dependencies are tracked in both `package-lock.json` and `bun.lock`; update both together. The Webflow CLI (`@webflow/webflow-cli`) is a dev dependency, so the scripts need no global install.
 

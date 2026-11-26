@@ -23,7 +23,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -220,3 +221,6 @@ $RECYCLE.BIN/
 
 # The extension bundle webflow extension bundle writes
 bundle.zip
+
+# The source map artifact for a Marketplace submission (npm run review)
+review.zip
