@@ -63,6 +63,10 @@ With `npm run dev` running, open `http://localhost:1337` in a browser. The panel
 | `npm run lint`      | ESLint and Prettier.                                             |
 | `npm test`          | Unit tests for the helpers in `src/` (Node test runner).         |
 
+## Publishing
+
+How to upload a new extension version and submit it to the Webflow Marketplace is in [`store/PUBLISHING.md`](store/PUBLISHING.md); the listing fields and images are in [`store/LISTING.md`](store/LISTING.md).
+
 ## License
 
 The extension's code is [MIT](LICENSE). The airline marks are trademarks of their owners; read the package's [Disclaimer](https://github.com/soaring-symbols/soaring-symbols/blob/main/DISCLAIMER.md) before using them.

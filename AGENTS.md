@@ -14,7 +14,7 @@ A Webflow Designer Extension (the panel of a Webflow App) that searches the [Soa
 - `src/settings.ts` — the size and mono color, kept in `localStorage` (which may throw or come back empty; the defaults apply then).
 - `scripts/review.js` — `review.zip` for a Marketplace submission: the same build with an external source map (it checks `index.js` matches `dist/`), plus `package.json` and `package-lock.json`.
 - `scripts/build.js` — esbuild: `src/ui.ts` → `dist/index.js`, and `src/index.html` copied next to it. No source maps: the Marketplace refuses a bundle that ships them.
-- `store/` — what the app's settings in Webflow show: `LISTING.md` (the App info fields and the Marketplace form), `icon.png` (256×256), `logo.png` (900×900) and the screenshots (1280×846), copied from `exports/webflow/` in [soaring-symbols/brand](https://github.com/soaring-symbols/brand), where they are rendered; change them there first.
+- `store/` — what the app's settings in Webflow show: `LISTING.md` (the App info fields and the Marketplace form), `PUBLISHING.md` (how to upload a new version and submit to the Marketplace, step by step), `icon.png` (256×256), `logo.png` (900×900) and the screenshots (1280×846), copied from `exports/webflow/` in [soaring-symbols/brand](https://github.com/soaring-symbols/brand), where they are rendered; change them there first.
 - `test/` — unit tests for `src/data.ts` and `src/settings.ts`, run by Node's test runner with type stripping.
 
 ### Where the data comes from
