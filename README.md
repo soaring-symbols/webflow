@@ -3,7 +3,7 @@
 A Webflow Designer extension to search airlines by name, IATA or ICAO code and insert their [Soaring Symbols](https://github.com/soaring-symbols/soaring-symbols) logos, icons and tails into your pages, along with the marks of airline alliances.
 
 > [!NOTE]
-> The extension isn't on the Webflow Marketplace yet. Try it by running it as a development app, as described under [Development](#development).
+> The extension isn't on the Webflow Marketplace. Add it to your own workspace as a private app, as described under [Add it to your workspace](#add-it-to-your-workspace).
 
 - Search 180+ airlines by name, other names they go by (SWISS), IATA or ICAO code, callsign or slug, and alliances (oneworld, SkyTeam, Star Alliance) by name. Cargo airlines are marked "Cargo", and searching "cargo" lists them.
 - Select an element on the page, then click a mark: it goes inside the element as an image, or right after it when the element can't hold one.
@@ -11,6 +11,30 @@ A Webflow Designer extension to search airlines by name, IATA or ICAO code and i
 - Pick the size of inserted marks (16 to 256 px), set by a class (`soaring-symbols-64`) you can restyle for every mark of that size, and the color of monochrome marks, or use the airline's primary color. Both are remembered.
 - Each mark type gets a row with its color, mono and dark-background versions in columns; the dark one is shown on a dark preview.
 - Airlines that changed their logo also list their earlier marks, under the years each was used.
+
+- The panel follows the Designer's light and dark appearance.
+
+## Add it to your workspace
+
+You need Node 22.18 or newer to build it, and a Webflow account that is an admin of the workspace with two-factor authentication on, which Webflow asks for before it takes an extension upload.
+
+1. Build the extension:
+
+    ```bash
+    git clone https://github.com/soaring-symbols/webflow.git
+    cd webflow
+    npm install
+    npm run bundle
+    ```
+
+    This writes `bundle.zip`.
+
+2. In Webflow, open **Workspace settings → Apps & Integrations → Develop** and create an app: name it Soaring Symbols, upload `store/icon.png` as its icon, and turn on the **Designer Extension** building block. It needs no Data API scopes.
+3. In the app, choose **Publish extension version** and upload `bundle.zip`.
+4. Install the app on a site from the same page.
+5. Open the site in the Designer, press E for the **Apps** panel, choose **Soaring Symbols** and **Launch App**.
+
+To insert a mark, select an element on the page, find the airline in the panel and click the mark. New airlines and fixed marks reach the app on their own, from the soaring-symbols package on jsDelivr; a new version of the app itself means pulling, running `npm run bundle` again and uploading the new `bundle.zip`.
 
 ## Development
 
@@ -21,7 +45,7 @@ npm install
 npm run dev
 ```
 
-`npm run dev` rebuilds on change and serves the extension at `http://localhost:1337`. In Webflow, create an app for your workspace (**Workspace settings → Apps & Integrations → Develop**) with the Designer Extension building block, install it on a site, then open the site in the Designer and launch the development app from the **Apps** panel.
+`npm run dev` rebuilds on change and serves the extension at `http://localhost:1337`. In Webflow, create an app for your workspace (**Workspace settings → Apps & Integrations → Develop**) with the Designer Extension building block, install it on a site, then open the site in the Designer and launch the development app from the **Apps** panel. Chrome blocks a public page from loading `localhost` until you allow **Local network access** for the Designer's site; uploading `bundle.zip` avoids it.
 
 | Command             | What it does                                                     |
 | :------------------ | :--------------------------------------------------------------- |
