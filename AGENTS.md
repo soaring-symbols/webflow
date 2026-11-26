@@ -47,7 +47,7 @@ Dependencies are tracked in both `package-lock.json` and `bun.lock`; update both
 ## Gotchas
 
 - Mono SVGs are drawn in `currentColor`, which an `<img>` draws in black, so the panel replaces it with the chosen color (`tintSvg`) before uploading.
-- The Designer API only works inside the Designer. Opened on its own (`npm run dev`, then `http://localhost:1337` in a browser), the panel lists airlines and marks, the Webflow script logs that it isn't running in Webflow, and a click only logs a notice (`inDesigner` in `src/designer.ts`).
+- The Designer API only works inside the Designer. Opened on its own (`npm run dev`, then `http://localhost:1337` in a browser), the panel lists airlines and marks, the Webflow script logs that it isn't running in Webflow, and a click only logs a notice (`inDesigner` in `src/designer.ts`). Narrow the window to 360 × 560, the size `ui.ts` asks the Designer for with `resizePanel` (as the Framer and Figma plugins' panels), and set `data-theme="light"` on the root from the console for the light theme.
 - The Designer has no drag and drop from an extension onto the canvas: marks are inserted into the selected element.
 - In the panel, a key handler that moves focus to a button must `preventDefault()`, or the same key press clicks that button.
 - The size and mono color row (`#controls`) moves into the detail view's marks while an airline is shown, and leaves the document when the list replaces them; `ui.ts` keeps references to it and its parts, so never look them up by id after the first airline.

@@ -47,6 +47,13 @@ npm run dev
 
 `npm run dev` rebuilds on change and serves the extension at `http://localhost:1337`. In Webflow, create an app for your workspace (**Workspace settings → Apps & Integrations → Develop**) with the Designer Extension building block, install it on a site, then open the site in the Designer and launch the development app from the **Apps** panel. Chrome blocks a public page from loading `localhost` until you allow **Local network access** for the Designer's site; uploading `bundle.zip` avoids it.
 
+### Try the panel without Webflow
+
+With `npm run dev` running, open `http://localhost:1337` in a browser. The panel lists airlines and shows their marks as it does in the Designer; clicking a mark only logs a notice, since inserting needs the Designer. It starts in the dark theme. To see it as in the Designer:
+
+- narrow the window to 360 × 560, the size the panel asks the Designer for (the browser's device toolbar sets an exact size),
+- run `document.documentElement.dataset.theme = 'light'` in the console for the light theme, and `delete document.documentElement.dataset.theme` to go back.
+
 | Command             | What it does                                                     |
 | :------------------ | :--------------------------------------------------------------- |
 | `npm run build`     | Build `dist/index.html` and `dist/index.js` with esbuild.        |
